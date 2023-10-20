@@ -12,6 +12,10 @@ fn main() {
 
     while let Some(arg) = args.next() {
         match &arg[..] {
+            "-h" | "--help" => {
+                help_text();
+                exit(0);
+            },
             "-d" | "--difficulty" => {
                 difficulty = args.next().expect("missing argument").parse::<u8>().expect("incorrect argument");
             },
@@ -20,6 +24,7 @@ fn main() {
             },
             _ => {
                 println!("unknown argumet");
+                help_text();
                 exit(1);
             }
         }
@@ -86,4 +91,15 @@ fn iterate_clean(board: &mut Board, difficulty: u8) {
     println!("{s}");
 }
 
-fn help_text() {}
+fn help_text() {
+    println!(
+"
+Usage:
+sudoku [args]
+
+-d\t--difficulty [0-81]\tset number of empty cells in output
+-s\t--show-iterations\toutput every generation step
+-h\t--help\t\t\tshow this help text
+"
+             );
+}
